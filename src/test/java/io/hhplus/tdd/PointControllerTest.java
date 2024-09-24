@@ -1,6 +1,5 @@
 package io.hhplus.tdd;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.hhplus.tdd.point.PointController;
 import io.hhplus.tdd.point.PointService;
 import io.hhplus.tdd.point.UserPoint;
@@ -10,6 +9,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.NoSuchElementException;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
@@ -43,5 +44,26 @@ public class PointControllerTest {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(1L));
+    }
+
+    @Test
+    void shouldThrowNoSuchElemException() throws Exception {
+        //given
+        String url = "/point/{id}";
+
+        given(pointService.findByUserId(anyLong()))
+                .willThrow(new NoSuchElementException());
+
+        //when
+        ResultActions resultActions = mockMvc.perform(get(url, 1L));
+
+        //then
+        resultActions
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldChargeUserPoint() throws Exception {
+
     }
 }

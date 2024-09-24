@@ -12,7 +12,6 @@ public class PointService {
     }
 
     public UserPoint findByUserId(long id) {
-        if(id <0) throw new IllegalArgumentException("invalid id");
         return userPointTable.selectById(id);
     }
 }

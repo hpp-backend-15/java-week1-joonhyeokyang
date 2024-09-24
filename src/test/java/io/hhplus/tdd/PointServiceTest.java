@@ -29,13 +29,4 @@ public class PointServiceTest {
         assertThat(userPoint.id()).isEqualTo(1L);
     }
 
-    @Test
-    void pathShouldBeLongTypeOtherwiseThrowException() {
-        long invalidId = -1L;
-
-        assertThatThrownBy(()-> pointService.findByUserId(invalidId))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("invalid id");
-    }
-
 }
