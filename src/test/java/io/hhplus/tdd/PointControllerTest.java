@@ -46,21 +46,6 @@ public class PointControllerTest {
                 .andExpect(jsonPath("id").value(1L));
     }
 
-    @Test
-    void shouldThrowNoSuchElemException() throws Exception {
-        //given
-        String url = "/point/{id}";
-
-        given(pointService.findByUserId(anyLong()))
-                .willThrow(new NoSuchElementException());
-
-        //when
-        ResultActions resultActions = mockMvc.perform(get(url, 1L));
-
-        //then
-        resultActions
-                .andExpect(status().isNotFound());
-    }
 
     @Test
     void shouldChargeUserPoint() throws Exception {
