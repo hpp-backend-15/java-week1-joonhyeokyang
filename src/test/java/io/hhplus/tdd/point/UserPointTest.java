@@ -1,6 +1,6 @@
 package io.hhplus.tdd.point;
 
-import org.assertj.core.api.Assertions;
+import io.hhplus.tdd.point.domain.UserPoint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

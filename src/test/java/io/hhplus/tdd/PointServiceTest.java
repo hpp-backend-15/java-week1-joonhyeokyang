@@ -1,16 +1,16 @@
 package io.hhplus.tdd;
 
-import io.hhplus.tdd.point.PointHistory;
-import io.hhplus.tdd.point.PointService;
-import io.hhplus.tdd.point.UserPoint;
+import io.hhplus.tdd.point.domain.PointHistory;
+import io.hhplus.tdd.point.application.PointService;
+import io.hhplus.tdd.point.domain.UserPoint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static io.hhplus.tdd.point.TransactionType.CHARGE;
-import static io.hhplus.tdd.point.TransactionType.USE;
+import static io.hhplus.tdd.point.domain.TransactionType.CHARGE;
+import static io.hhplus.tdd.point.domain.TransactionType.USE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

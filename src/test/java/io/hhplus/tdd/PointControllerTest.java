@@ -1,8 +1,8 @@
 package io.hhplus.tdd;
 
-import io.hhplus.tdd.point.PointController;
-import io.hhplus.tdd.point.PointService;
-import io.hhplus.tdd.point.UserPoint;
+import io.hhplus.tdd.point.presentation.PointController;
+import io.hhplus.tdd.point.application.PointService;
+import io.hhplus.tdd.point.domain.UserPoint;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

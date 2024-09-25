@@ -1,7 +1,7 @@
 package io.hhplus.tdd;
 
 import io.hhplus.tdd.database.UserPointTable;
-import io.hhplus.tdd.point.UserPoint;
+import io.hhplus.tdd.point.domain.UserPoint;
 
 import java.util.HashMap;
 
