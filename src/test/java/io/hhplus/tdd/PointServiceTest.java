@@ -1,8 +1,10 @@
 package io.hhplus.tdd;
 
+import io.hhplus.tdd.point.domain.ChargePointService;
 import io.hhplus.tdd.point.domain.PointHistory;
 import io.hhplus.tdd.point.application.PointService;
 import io.hhplus.tdd.point.domain.UserPoint;
+import io.hhplus.tdd.point.infra.SynchronizedChargePointService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +27,8 @@ public class PointServiceTest {
         // 실제 UserPointTable 연동을 대역을 사용하여 테스트를 용이하도록 한다.
         memoryUserPointTable = new MemoryUserPointTable();
         memoryPointHistoryTable = new MemoryPointHistoryTable();
-        pointService = new PointService(memoryUserPointTable, memoryPointHistoryTable);
+        ChargePointService chargePointService = new SynchronizedChargePointService();
+        pointService = new PointService(memoryUserPointTable, memoryPointHistoryTable, chargePointService);
     }
 
     @Test

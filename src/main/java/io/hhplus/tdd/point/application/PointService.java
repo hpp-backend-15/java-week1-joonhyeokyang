@@ -13,19 +13,26 @@ import static io.hhplus.tdd.point.domain.TransactionType.CHARGE;
 import static io.hhplus.tdd.point.domain.TransactionType.USE;
 
 @Service
-@RequiredArgsConstructor
 public class PointService {
     private final UserPointTable userPointTable;
     private final PointHistoryTable pointHistoryTable;
+    private final ChargePointService chargePointService;
 
     public UserPoint findByUserId(long id) {
         return userPointTable.selectById(id);
     }
 
+    public PointService(UserPointTable userPointTable, PointHistoryTable pointHistoryTable, ChargePointService chargePointService) {
+        this.userPointTable = userPointTable;
+        this.pointHistoryTable = pointHistoryTable;
+        this.chargePointService = chargePointService;
+    }
+
     public UserPoint chargeUserPoint(long id, long amount) {
         UserPoint userPoint = userPointTable.selectById(id);
 
-        UserPoint chargedPoint = userPoint.chargePoint(amount);
+//        UserPoint chargedPoint = userPoint.chargePoint(amount);
+        UserPoint chargedPoint = chargePointService.charge(userPoint, amount);
         pointHistoryTable.insert(id, chargedPoint.point(), CHARGE, System.currentTimeMillis());
 
         return userPointTable.insertOrUpdate(id, chargedPoint.point());
