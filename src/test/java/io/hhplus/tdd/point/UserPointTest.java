@@ -33,8 +33,8 @@ public class UserPointTest {
     }
 
     @Test
-    void 충전할시유저의포인트는_1000000000을_초과할수없다() {
-        assertThatThrownBy(() -> userPoint.chargePoint(1_000_000_000L))
+    void 충전할시유저의포인트는_기존과합쳐1000000000을_초과할수없다() {
+        assertThatThrownBy(() -> userPoint.chargePoint(999_999_000L))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -44,4 +44,9 @@ public class UserPointTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    void 한번에사용할수있는포인트는_1000000000을_초과할수없다() {
+        assertThatThrownBy(() -> userPoint.usePoint(1_000_000_000L))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
