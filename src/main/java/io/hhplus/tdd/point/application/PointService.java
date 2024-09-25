@@ -2,9 +2,12 @@ package io.hhplus.tdd.point.application;
 
 import io.hhplus.tdd.database.PointHistoryTable;
 import io.hhplus.tdd.database.UserPointTable;
+import io.hhplus.tdd.point.domain.PointHistory;
 import io.hhplus.tdd.point.domain.UserPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static io.hhplus.tdd.point.domain.TransactionType.CHARGE;
 import static io.hhplus.tdd.point.domain.TransactionType.USE;
