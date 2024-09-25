@@ -1,12 +1,13 @@
 package io.hhplus.tdd;
 
+import io.hhplus.tdd.database.PointHistoryTable;
 import io.hhplus.tdd.point.PointHistory;
 import io.hhplus.tdd.point.TransactionType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemoryPointHistoryTable {
+public class MemoryPointHistoryTable extends PointHistoryTable {
     private final List<PointHistory> table = new ArrayList<>();
     private long cursor = 1;
 
