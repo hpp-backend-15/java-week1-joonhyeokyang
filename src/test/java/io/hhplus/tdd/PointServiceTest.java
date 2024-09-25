@@ -70,14 +70,14 @@ public class PointServiceTest {
     }
 
     @Test
-    void 사용하려는포인트가_0이하인경우_예외() throws Exception {
+    void 사용하려는포인트가_0이하인경우_예외() {
         //then
         assertThatThrownBy(() -> pointService.useUserPoint(1L, -1L))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void 포인트를_충전한다면_내역이저장된다() throws Exception {
+    void 포인트를_충전한다면_내역이저장된다() {
         //given
         memoryUserPointTable.insertOrUpdate(1L, 0);
 
@@ -94,7 +94,7 @@ public class PointServiceTest {
     }
 
     @Test
-    void 포인트를_사용한다면_내역이저장된다() throws Exception {
+    void 포인트를_사용한다면_내역이저장된다() {
         //given
         memoryUserPointTable.insertOrUpdate(1L, 1000L);
 
