@@ -1,6 +1,6 @@
 package io.hhplus.tdd;
 
-import io.hhplus.tdd.point.domain.ChargePointService;
+import io.hhplus.tdd.point.application.ChargePointService;
 import io.hhplus.tdd.point.domain.PointHistory;
 import io.hhplus.tdd.point.application.PointService;
 import io.hhplus.tdd.point.domain.UserPoint;
@@ -27,8 +27,7 @@ public class PointServiceTest {
         // 실제 UserPointTable 연동을 대역을 사용하여 테스트를 용이하도록 한다.
         memoryUserPointTable = new MemoryUserPointTable();
         memoryPointHistoryTable = new MemoryPointHistoryTable();
-        ChargePointService chargePointService = new SynchronizedChargePointService();
-        pointService = new PointService(memoryUserPointTable, memoryPointHistoryTable, chargePointService);
+        pointService = new PointService(memoryUserPointTable, memoryPointHistoryTable);
     }
 
     @Test
@@ -38,18 +37,6 @@ public class PointServiceTest {
         UserPoint userPoint = pointService.findByUserId(1L);
 
         assertThat(userPoint.id()).isEqualTo(1L);
-    }
-
-    @Test
-    void shouldChargePoint() {
-        //given
-        memoryUserPointTable.insertOrUpdate(1L, 0);
-
-        //when
-        UserPoint chargedPoint = pointService.chargeUserPoint(1L, 1000L);
-
-        //then
-        assertThat(chargedPoint.point()).isEqualTo(1000L);
     }
 
     @Test
@@ -79,22 +66,6 @@ public class PointServiceTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    void 포인트를_충전한다면_내역이저장된다() {
-        //given
-        memoryUserPointTable.insertOrUpdate(1L, 0);
-
-        //when
-        pointService.chargeUserPoint(1L, 1000L);
-        List<PointHistory> pointHistories = memoryPointHistoryTable.selectAllByUserId(1L);
-
-        //then
-        assertThat(pointHistories).hasSize(1);
-        assertThat(pointHistories.get(0).userId()).isEqualTo(1L);
-        assertThat(pointHistories.get(0).amount()).isEqualTo(1000L);
-        assertThat(pointHistories.get(0).type()).isEqualTo(CHARGE);
-
-    }
 
     @Test
     void 포인트를_사용한다면_내역이저장된다() {
@@ -127,25 +98,12 @@ public class PointServiceTest {
         assertThat(pointHistories.get(0).type()).isEqualTo(USE);
     }
 
-    @Test
-    void 포인트_충전내역을_조회할수있다() {
-        //given
-        memoryUserPointTable.insertOrUpdate(1L, 1000L);
-
-        //when
-        pointService.chargeUserPoint(1L, 1000L);
-        List<PointHistory> pointHistories = pointService.findAllPointHistoryByUserId(1L);
-
-        assertThat(pointHistories).isNotEmpty();
-        assertThat(pointHistories.get(0).type()).isEqualTo(CHARGE);
-    }
-
 
     //    @Test
-    void 만약충전하려는포인트id가_존재하지않는다면_예외발생() {
-
-        assertThatThrownBy(() -> pointService.chargeUserPoint(1L, 1000L))
-                .isEqualTo(NoSuchElementException.class);
-    }
+//    void 만약충전하려는포인트id가_존재하지않는다면_예외발생() {
+//
+//        assertThatThrownBy(() -> pointService.chargeUserPoint(1L, 1000L))
+//                .isEqualTo(NoSuchElementException.class);
+//    }
 
 }

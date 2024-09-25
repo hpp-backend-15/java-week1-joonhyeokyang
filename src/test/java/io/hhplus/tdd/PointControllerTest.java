@@ -1,5 +1,6 @@
 package io.hhplus.tdd;
 
+import io.hhplus.tdd.point.application.ChargePointService;
 import io.hhplus.tdd.point.presentation.PointController;
 import io.hhplus.tdd.point.application.PointService;
 import io.hhplus.tdd.point.domain.UserPoint;
@@ -25,6 +26,9 @@ public class PointControllerTest {
 
     @MockBean
     private PointService pointService;
+
+    @MockBean
+    private ChargePointService chargePointService;
 
     @Test
     void shouldReturnUserPoint() throws Exception {
