@@ -106,5 +106,65 @@ public class ChargePointServiceTest {
         assertThat(pointService.findByUserId(1L).point()).isNotEqualTo(300L);
     }
 
+    @Test
+    void synchronized_포인트충전은_동시성문제를_해결한다() throws Exception {
+        //given
+        memoryUserPointTable.insertOrUpdate(1L, 0L);
+        chargePointService = new SynchronizedChargePointService(memoryUserPointTable, memoryPointHistoryTable);
+
+        //when
+        for (int i = 0; i < numberOfThreads; i++) {
+            executorService.submit(() -> {
+                chargePointService.charge(1L, 1L);
+                latch.countDown();  // 작업이 끝난 후 카운트 감소
+            });
+        }
+
+        latch.await();  // 모든 스레드가 끝날 때까지 대기
+
+        //then
+        assertThat(pointService.findByUserId(1L).point()).isEqualTo(300L);
+    }
+
+    @Test
+    void FairReentrantLock_포인트충전은_동시성문제를_해결한다() throws Exception {
+        //given
+        memoryUserPointTable.insertOrUpdate(1L, 0L);
+        chargePointService = new FairReentrantLockChargePointService(memoryUserPointTable, memoryPointHistoryTable);
+
+        //when
+        for (int i = 0; i < numberOfThreads; i++) {
+            executorService.submit(() -> {
+                chargePointService.charge(1L, 1L);
+                latch.countDown();  // 작업이 끝난 후 카운트 감소
+            });
+        }
+
+        latch.await();  // 모든 스레드가 끝날 때까지 대기
+
+        //then
+        assertThat(pointService.findByUserId(1L).point()).isEqualTo(300L);
+    }
+
+    @Test
+    void UnFairReentrantLock_포인트충전은_동시성문제를_해결한다() throws Exception {
+        //given
+        memoryUserPointTable.insertOrUpdate(1L, 0L);
+        chargePointService = new FairReentrantLockChargePointService(memoryUserPointTable, memoryPointHistoryTable);
+
+        //when
+        for (int i = 0; i < numberOfThreads; i++) {
+            executorService.submit(() -> {
+                chargePointService.charge(1L, 1L);
+                latch.countDown();  // 작업이 끝난 후 카운트 감소
+            });
+        }
+
+        latch.await();  // 모든 스레드가 끝날 때까지 대기
+
+        //then
+        assertThat(pointService.findByUserId(1L).point()).isEqualTo(300L);
+    }
+
 
 }
