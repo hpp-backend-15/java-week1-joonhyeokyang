@@ -1,8 +1,8 @@
 package io.hhplus.tdd;
 
 import io.hhplus.tdd.database.PointHistoryTable;
-import io.hhplus.tdd.point.PointHistory;
-import io.hhplus.tdd.point.TransactionType;
+import io.hhplus.tdd.point.domain.PointHistory;
+import io.hhplus.tdd.point.domain.TransactionType;
 
 import java.util.ArrayList;
 import java.util.List;
