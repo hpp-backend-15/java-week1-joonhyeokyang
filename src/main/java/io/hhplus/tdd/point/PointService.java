@@ -5,6 +5,8 @@ import io.hhplus.tdd.database.UserPointTable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static io.hhplus.tdd.point.TransactionType.CHARGE;
 import static io.hhplus.tdd.point.TransactionType.USE;
 
@@ -17,7 +19,6 @@ public class PointService {
     public UserPoint findByUserId(long id) {
         return userPointTable.selectById(id);
     }
-
 
     public UserPoint chargeUserPoint(long id, long amount) {
         UserPoint userPoint = userPointTable.selectById(id);
@@ -35,5 +36,9 @@ public class PointService {
         pointHistoryTable.insert(id, usedPoint.point(), USE, System.currentTimeMillis());
 
         return userPointTable.insertOrUpdate(id, usedPoint.point());
+    }
+
+    public List<PointHistory> findAllPointHistoryByUserId(long id) {
+        return pointHistoryTable.selectAllByUserId(id);
     }
 }

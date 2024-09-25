@@ -110,8 +110,35 @@ public class PointServiceTest {
 
     }
 
+    @Test
+    void 포인트_사용내역을_조회할수있다() {
+        //given
+        memoryUserPointTable.insertOrUpdate(1L, 1000L);
 
-//    @Test
+        //when
+        pointService.useUserPoint(1L, 1000L);
+        List<PointHistory> pointHistories = pointService.findAllPointHistoryByUserId(1L);
+
+        assertThat(pointHistories.get(0).userId()).isEqualTo(1L);
+        assertThat(pointHistories.get(0).amount()).isEqualTo(0L);
+        assertThat(pointHistories.get(0).type()).isEqualTo(USE);
+    }
+
+    @Test
+    void 포인트_충전내역을_조회할수있다() {
+        //given
+        memoryUserPointTable.insertOrUpdate(1L, 1000L);
+
+        //when
+        pointService.chargeUserPoint(1L, 1000L);
+        List<PointHistory> pointHistories = pointService.findAllPointHistoryByUserId(1L);
+
+        assertThat(pointHistories).isNotEmpty();
+        assertThat(pointHistories.get(0).type()).isEqualTo(CHARGE);
+    }
+
+
+    //    @Test
     void 만약충전하려는포인트id가_존재하지않는다면_예외발생() {
 
         assertThatThrownBy(() -> pointService.chargeUserPoint(1L, 1000L))
