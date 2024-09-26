@@ -4,31 +4,24 @@ import io.hhplus.tdd.database.PointHistoryTable;
 import io.hhplus.tdd.database.UserPointTable;
 import io.hhplus.tdd.point.domain.PointHistory;
 import io.hhplus.tdd.point.domain.UserPoint;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static io.hhplus.tdd.point.domain.TransactionType.CHARGE;
 import static io.hhplus.tdd.point.domain.TransactionType.USE;
 
 @Service
-@RequiredArgsConstructor
 public class PointService {
     private final UserPointTable userPointTable;
     private final PointHistoryTable pointHistoryTable;
 
-    public UserPoint findByUserId(long id) {
-        return userPointTable.selectById(id);
+    public PointService(UserPointTable userPointTable, PointHistoryTable pointHistoryTable) {
+        this.userPointTable = userPointTable;
+        this.pointHistoryTable = pointHistoryTable;
     }
 
-    public UserPoint chargeUserPoint(long id, long amount) {
-        UserPoint userPoint = userPointTable.selectById(id);
-
-        UserPoint chargedPoint = userPoint.chargePoint(amount);
-        pointHistoryTable.insert(id, chargedPoint.point(), CHARGE, System.currentTimeMillis());
-
-        return userPointTable.insertOrUpdate(id, chargedPoint.point());
+    public UserPoint findByUserId(long id) {
+        return userPointTable.selectById(id);
     }
 
     public UserPoint useUserPoint(long id, long amount) {
