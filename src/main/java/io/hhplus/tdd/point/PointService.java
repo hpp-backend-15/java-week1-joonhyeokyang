@@ -14,4 +14,19 @@ public class PointService {
     public UserPoint findByUserId(long id) {
         return userPointTable.selectById(id);
     }
+
+    public UserPoint chargeUserPoint(long id, long amount) {
+        UserPoint userPoint = userPointTable.selectById(id);
+
+        UserPoint chargedPoint = userPoint.chargePoint(amount);
+
+        return userPointTable.insertOrUpdate(id, chargedPoint.point());
+    }
+
+    public UserPoint useUserPoint(long id, long amount) {
+        UserPoint userPoint = userPointTable.selectById(id);
+
+        UserPoint usedPoint = userPoint.usePoint(amount);
+        return userPointTable.insertOrUpdate(id, usedPoint.point());
+    }
 }
