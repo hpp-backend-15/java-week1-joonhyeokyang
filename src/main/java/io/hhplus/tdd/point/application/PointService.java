@@ -24,15 +24,6 @@ public class PointService {
         return userPointTable.selectById(id);
     }
 
-    public UserPoint useUserPoint(long id, long amount) {
-        UserPoint userPoint = userPointTable.selectById(id);
-
-        UserPoint usedPoint = userPoint.usePoint(amount);
-        pointHistoryTable.insert(id, usedPoint.point(), USE, System.currentTimeMillis());
-
-        return userPointTable.insertOrUpdate(id, usedPoint.point());
-    }
-
     public List<PointHistory> findAllPointHistoryByUserId(long id) {
         return pointHistoryTable.selectAllByUserId(id);
     }

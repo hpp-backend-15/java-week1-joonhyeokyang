@@ -35,65 +35,6 @@ public class PointServiceTest {
         assertThat(userPoint.id()).isEqualTo(1L);
     }
 
-    @Test
-    void shouldUsePoint() {
-        //given
-        memoryUserPointTable.insertOrUpdate(1L, 2000L);
-
-        //when
-        UserPoint usedUserPoint = pointService.useUserPoint(1L, 1000L);
-
-        //then
-        assertThat(usedUserPoint.point()).isEqualTo(1000L);
-    }
-
-    @Test
-    void 현재포인트보다_큰값을사용하는경우_예외() {
-        memoryUserPointTable.insertOrUpdate(1L, 0);
-
-        assertThatThrownBy(() -> pointService.useUserPoint(1L, 1000L))
-                .isInstanceOf(IllegalStateException.class);
-    }
-
-    @Test
-    void 사용하려는포인트가_0이하인경우_예외() {
-        //then
-        assertThatThrownBy(() -> pointService.useUserPoint(1L, -1L))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-
-    @Test
-    void 포인트를_사용한다면_내역이저장된다() {
-        //given
-        memoryUserPointTable.insertOrUpdate(1L, 1000L);
-
-        //when
-        pointService.useUserPoint(1L, 1000L);
-        List<PointHistory> pointHistories = memoryPointHistoryTable.selectAllByUserId(1L);
-
-        //then
-        assertThat(pointHistories).hasSize(1);
-        assertThat(pointHistories.get(0).userId()).isEqualTo(1L);
-        assertThat(pointHistories.get(0).amount()).isEqualTo(0L);
-        assertThat(pointHistories.get(0).type()).isEqualTo(USE);
-
-    }
-
-    @Test
-    void 포인트_사용내역을_조회할수있다() {
-        //given
-        memoryUserPointTable.insertOrUpdate(1L, 1000L);
-
-        //when
-        pointService.useUserPoint(1L, 1000L);
-        List<PointHistory> pointHistories = pointService.findAllPointHistoryByUserId(1L);
-
-        assertThat(pointHistories.get(0).userId()).isEqualTo(1L);
-        assertThat(pointHistories.get(0).amount()).isEqualTo(0L);
-        assertThat(pointHistories.get(0).type()).isEqualTo(USE);
-    }
-
 
     //    @Test
 //    void 만약충전하려는포인트id가_존재하지않는다면_예외발생() {

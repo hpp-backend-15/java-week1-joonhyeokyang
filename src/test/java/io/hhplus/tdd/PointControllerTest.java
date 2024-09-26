@@ -1,6 +1,7 @@
 package io.hhplus.tdd;
 
 import io.hhplus.tdd.point.application.ChargePointService;
+import io.hhplus.tdd.point.application.UsePointService;
 import io.hhplus.tdd.point.presentation.PointController;
 import io.hhplus.tdd.point.application.PointService;
 import io.hhplus.tdd.point.domain.UserPoint;
@@ -30,6 +31,9 @@ public class PointControllerTest {
     @MockBean
     private ChargePointService chargePointService;
 
+    @MockBean
+    private UsePointService usePointService;
+
     @Test
     void shouldReturnUserPoint() throws Exception {
         //given
@@ -50,7 +54,7 @@ public class PointControllerTest {
 
 
     /*
-      허재 코치 멘토링 이후
+      허재 코치 공통 멘토링 이후
       Controller 단에서 단위 테스트가 큰 의미가 없다고 느껴졌다.
       고유 로직이 없고, Service Layer 메서드 호출과 해당 값을 반환해주는 역할이기 때문이다.
       단위 테스트보단, 통합 테스트를 작성하는 방향으로 선회해야겠다.
