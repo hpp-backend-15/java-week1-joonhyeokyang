@@ -2,6 +2,7 @@ package io.hhplus.tdd.point.presentation;
 
 import io.hhplus.tdd.point.application.ChargePointService;
 import io.hhplus.tdd.point.application.PointService;
+import io.hhplus.tdd.point.application.UsePointService;
 import io.hhplus.tdd.point.domain.PointHistory;
 import io.hhplus.tdd.point.domain.UserPoint;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class PointController {
     private static final Logger log = LoggerFactory.getLogger(PointController.class);
     private final PointService pointService;
     private final ChargePointService chargePointService;
+    private final UsePointService usePointService;
 
     /**
      * TODO - 특정 유저의 포인트를 조회하는 기능을 작성해주세요.
@@ -58,6 +60,6 @@ public class PointController {
             @PathVariable long id,
             @RequestBody long amount
     ) {
-        return pointService.useUserPoint(id, amount);
+        return usePointService.use(id, amount);
     }
 }
