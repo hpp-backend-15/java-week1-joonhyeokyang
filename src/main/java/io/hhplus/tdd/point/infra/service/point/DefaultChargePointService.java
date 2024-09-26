@@ -1,4 +1,4 @@
-package io.hhplus.tdd.point.infra;
+package io.hhplus.tdd.point.infra.service.point;
 
 import io.hhplus.tdd.database.PointHistoryTable;
 import io.hhplus.tdd.database.UserPointTable;

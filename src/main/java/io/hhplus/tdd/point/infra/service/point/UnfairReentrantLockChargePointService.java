@@ -1,4 +1,4 @@
-package io.hhplus.tdd.point.infra;
+package io.hhplus.tdd.point.infra.service.point;
 
 import io.hhplus.tdd.database.PointHistoryTable;
 import io.hhplus.tdd.database.UserPointTable;
@@ -12,10 +12,10 @@ import java.util.concurrent.locks.ReentrantLock;
 import static io.hhplus.tdd.point.domain.TransactionType.CHARGE;
 
 @RequiredArgsConstructor
-public class FairReentrantLockChargePointService implements ChargePointService {
+public class UnfairReentrantLockChargePointService implements ChargePointService {
     private final UserPointTable userPointTable;
     private final PointHistoryTable pointHistoryTable;
-    private final Lock lock = new ReentrantLock(true);
+    private final Lock lock = new ReentrantLock();
 
     @Override
     public UserPoint charge(long id, long amount) {
